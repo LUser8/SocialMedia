@@ -39,8 +39,10 @@ class Profile(models.Model):
 
     def get_likes_receive_no(self):
         posts = self.posts.all()
+        print(posts)
         total_liked = 0
         for item in posts:
+            print(item.liked.all().count())
             total_liked += item.liked.all().count()
 
         return total_liked
@@ -69,8 +71,10 @@ STATUS_CHOICES = (
 
 
 class Relationship(models.Model):
-    sender = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='sender')
-    receiver = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='receiver')
+    sender = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, related_name='sender')
+    receiver = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, related_name='receiver')
     status = models.CharField(max_length=8, choices=STATUS_CHOICES)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
